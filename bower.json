@@ -1,5 +1,5 @@
 {
-  "name": "dojo_restaurants",
+  "name": "restaurants",
   "description": "review restaurants near your dojo",
   "main": "server.js",
   "authors": [
