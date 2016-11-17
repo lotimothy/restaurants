@@ -1,0 +1,55 @@
+<!doctype html>
+<html ng-app="dojoReview">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>UIEat</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+	<script src="core.js"></script>
+</head>
+
+<body ng-controller="mainController">
+	<div class="container">
+
+<!-- title and filters -->
+		<div class="jumbotron text-center">
+			<h1>You, I, Eat</h1>
+		</div>
+		<div class="row text-center">
+			<form>
+				<input type="text" class="filter text-center input-lg" placeholder="what's your budget?" ng-model='priceFilter'><br />
+				<input type="text" class="filter text-center input-sm" placeholder="filter by eater" ng-model='userFilter'>
+				<input type="text" class="filter text-center input-sm" placeholder="filter by food" ng-model='foodFilter'>
+				<input type="text" class="filter text-center input-sm" placeholder="filter by place" ng-model='restaurantFilter'>
+			</form>
+		</div>
+		<br />
+
+<!-- list of reviews -->
+		<div class="row text-center">
+			<div class="panel panel-primary col-sm-4" ng-repeat="review in reviews | filter:{name: userFilter, restaurant: restaurantFilter, food: foodFilter} | orderBy: '-price'" ng-if="priceFilter == null || review.price <= priceFilter" ng-show='$index < 50'>
+				<!-- <label><input type="radio" ng-click="deleteReview(review._id)"> delete</label> -->
+				<h4>${{review.price}} {{review.food}}</h4>
+				<img ng-show="review.img !== undefined" ng-src="{{review.img}}" alt="Food Image" class='thumbnail review-img'>
+				<p>{{review.name}} @ {{review.restaurant}}</p>
+			</div>
+		</div>
+
+<!-- add a new review -->
+		<div class="row text-center">
+			<h3>Add your experience:</h3>
+			<form>
+				<input type="text" class="text-center input-sm" placeholder="your name..." ng-model="formData.name">
+				<input type="text" class="text-center input-sm" placeholder="what did you eat?" ng-model="formData.food">
+				<input type="text" class="text-center input-sm" placeholder="where did you eat it?" ng-model="formData.restaurant"><br />
+				<input type="text" class="text-center input-sm" placeholder="how much did you pay?" ng-model="formData.price">
+				<input type="text" class="text-center input-sm" placeholder="upload a picture of it" ng-model="formData.img">
+				<button type="submit" class="btn btn-danger btn-sm" style="width:149px;" ng-click="createReview()">Add</button>
+			</form>
+		</div>
+
+	</div>
+</body>
+</html>
